@@ -22,6 +22,7 @@ const _ = require('lodash')
 const fs = require('fs')
 const uuidv4 = require('uuid/v4')
 const semver = require('semver')
+const ports = require('../ports')
 
 let disableWriteSettings = false
 
@@ -34,6 +35,8 @@ function load(app) {
 
   config.getExternalHostname = getExternalHostname.bind(config, config)
   config.getExternalPort = getExternalPort.bind(config, config)
+  config.getPrimaryPort = ports.getPrimaryPort.bind(app, app)
+  config.getSecondaryPort = ports.getSecondaryPort.bind(app, app)
 
   config.appPath = config.appPath || path.normalize(__dirname + '/../../')
   debug('appPath:' + config.appPath)

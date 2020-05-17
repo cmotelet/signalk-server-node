@@ -614,20 +614,46 @@ const SignalK = props => {
             <option value='serial'>Serial</option>
             <option value='ws'>WebSocket</option>
             <option value='wss'>WebSocket SSL</option>
-            <option value='wss-ssc'>WebSocket SSL self-signed cert</option>
             <option value='tcp'>TCP</option>
             <option value='udp'>UDP</option>
           </Input>
         </Col>
       </FormGroup>
+      {(props.value.options.type === 'wss') && (
+        <div>
+          <FormGroup row>
+            <Col xs='0' md='2'>
+              <Label htmlFor='options.allowSelfSignedCertificate'>Allow self signed certificate</Label>
+            </Col>
+            <Col xs='12' md='10'>
+              <div key={name}>
+                <Label className='switch switch-text switch-primary'>
+                  <Input
+                    type='checkbox'
+                    id='options.allowSelfSignedCertificate'
+                    name='options.allowSelfSignedCertificate'
+                    className='switch-input'
+                    onChange={props.onChange}
+                    checked={props.value.options.allowSelfSignedCertificate}
+                  />
+                  <span
+                    className='switch-label'
+                    data-on='On'
+                    data-off='Off'
+                  />
+                  <span className='switch-handle' />
+                </Label>
+              </div>
+            </Col>
+          </FormGroup>
+        </div>
+      )}
       {(props.value.options.type === 'ws' ||
         props.value.options.type === 'wss' ||
-        props.value.options.type === 'wss-ssc' ||
         props.value.options.type === 'tcp') && (
         <div>
           {(props.value.options.type === 'ws' ||
-            props.value.options.type === 'wss' ||
-            props.value.options.type === 'wss-ssc') && (
+            props.value.options.type === 'wss') && (
             <FormGroup row>
               <Col xs='0' md='2'>
               <Label htmlFor='options.useDiscovery'>Discovery</Label>
@@ -650,7 +676,7 @@ const SignalK = props => {
                     />
                     <span className='switch-handle' />
                   </Label>
-                  Discover Signal K servers automatically
+                  &nbsp;Discover Signal K servers automatically
                   </div>
               </Col>
             </FormGroup>
@@ -668,8 +694,7 @@ const SignalK = props => {
             </div>
           )}
           {(props.value.options.type === 'ws' ||
-            props.value.options.type === 'wss' ||
-            props.value.options.type === 'wss-ssc') && (
+            props.value.options.type === 'wss') && (
             <div>
              <TextAreaInput
                title='Subscription'
